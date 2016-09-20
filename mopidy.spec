@@ -13,7 +13,9 @@ Source2:	%{name}.service
 URL:		http://www.mopidy.com/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
+Requires:	gstreamer-audiosink-alsa
 Requires:	gstreamer-mad
+Requires:	gstreamer-pulseaudio
 Requires:	python-backports-ssl_match_hostname
 Requires:	python-certifi
 Requires:	python-dbus
