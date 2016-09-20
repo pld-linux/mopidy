@@ -3,7 +3,7 @@
 Summary:	Music server with MPD and Spotify support
 Name:		mopidy
 Version:	2.0.0
-Release:	0.2
+Release:	0.3
 License:	Apache v2.0
 Group:		Development/Libraries
 Source0:	https://github.com/mopidy/mopidy/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -21,6 +21,14 @@ Requires:	python-pygobject
 Requires:	python-pykka
 Requires:	python-requests
 Requires:	python-tornado
+Provides:	group(mopidy)
+Provides:	user(mopidy)
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -52,6 +60,16 @@ cp %{SOURCE2} $RPM_BUILD_ROOT%{systemdunitdir}/%{name}.service
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%pre
+%groupadd -g 332 %{name}
+%useradd -u 332 -d /var/lib/%{name} -g %{name} -c "System user to run mopidy service" %{name}
+
+%postun
+if [ "$1" = "0" ]; then
+	%userremove %{name}
+	%groupremove %{name}
+fi
 
 %files
 %defattr(644,root,root,755)
