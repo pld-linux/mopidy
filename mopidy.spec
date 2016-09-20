@@ -13,6 +13,7 @@ Source2:	%{name}.service
 URL:		http://www.mopidy.com/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
+Requires:	gstreamer-mad
 Requires:	python-backports-ssl_match_hostname
 Requires:	python-certifi
 Requires:	python-dbus
