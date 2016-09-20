@@ -3,7 +3,7 @@
 Summary:	Music server with MPD and Spotify support
 Name:		mopidy
 Version:	2.0.0
-Release:	0.1
+Release:	0.2
 License:	Apache v2.0
 Group:		Development/Libraries
 Source0:	https://github.com/mopidy/mopidy/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -13,15 +13,14 @@ Source2:	%{name}.service
 URL:		http://www.mopidy.com/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
-Requires:	gstreamer-python
 Requires:	pykka
 Requires:	python-backports-ssl_match_hostname
+Requires:	python-certifi
 Requires:	python-dbus
-Requires:	python-pygobject
+Requires:	python-gstreamer
 Requires:	python-pygobject
 Requires:	python-requests
 Requires:	python-tornado
-Requires:	python2-certifi
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -56,7 +55,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
+%dir %{_sysconfdir}/%{name}
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/%{name}.conf
 %{systemdunitdir}/%{name}.service
 %attr(755,root,root) %{_bindir}/mopidy
 %{py_sitescriptdir}/%{module}
