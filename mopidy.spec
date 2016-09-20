@@ -3,7 +3,7 @@
 Summary:	Music server with MPD and Spotify support
 Name:		mopidy
 Version:	2.0.0
-Release:	0.3
+Release:	0.6
 License:	Apache v2.0
 Group:		Development/Libraries
 Source0:	https://github.com/mopidy/mopidy/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -50,13 +50,13 @@ rm -rf $RPM_BUILD_ROOT
 %py_install
 %py_postclean
 
-# install mopidy config file
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
-cp %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/%{name}.conf
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{systemdunitdir}} \
+	$RPM_BUILD_ROOT%{_localstatedir}/cache/%{name} \
+	$RPM_BUILD_ROOT%{_localstatedir}/log/%{name} \
+	$RPM_BUILD_ROOT%{_sharedstatedir}/%{name}/{local,media,playlists}
 
-# install mopidy service file
-install -d $RPM_BUILD_ROOT%{systemdunitdir}
-cp %{SOURCE2} $RPM_BUILD_ROOT%{systemdunitdir}/%{name}.service
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/%{name}.conf
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{systemdunitdir}/%{name}.service
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -79,3 +79,10 @@ fi
 %attr(755,root,root) %{_bindir}/mopidy
 %{py_sitescriptdir}/%{module}
 %{py_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
+
+%attr(770,root,%{name}) %dir %{_localstatedir}/cache/%{name}
+%attr(770,root,%{name}) %dir %{_localstatedir}/log/%{name}
+%attr(770,root,%{name}) %dir %{_sharedstatedir}/%{name}
+%attr(770,root,%{name}) %dir %{_sharedstatedir}/%{name}/local
+%attr(770,root,%{name}) %dir %{_sharedstatedir}/%{name}/media
+%attr(770,root,%{name}) %dir %{_sharedstatedir}/%{name}/playlists
