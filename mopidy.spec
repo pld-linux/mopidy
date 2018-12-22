@@ -2,15 +2,15 @@
 %define		egg_name	Mopidy
 Summary:	Music server with MPD and Spotify support
 Name:		mopidy
-Version:	2.0.0
-Release:	0.6
+Version:	2.2.1
+Release:	1
 License:	Apache v2.0
 Group:		Development/Libraries
 Source0:	https://github.com/mopidy/mopidy/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	ada9471fe369a7c70c2d4cb3f0e10abc
+# Source0-md5:	bf4afeadcc4b909e7ef9426a208036a3
 Source1:	%{name}.conf
 Source2:	%{name}.service
-URL:		http://www.mopidy.com/
+URL:		https://www.mopidy.com/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 Requires:	gstreamer-audiosink-alsa
