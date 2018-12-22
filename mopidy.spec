@@ -21,9 +21,6 @@ Requires:	python-certifi
 Requires:	python-dbus
 Requires:	python-gstreamer
 Requires:	python-pygobject
-Requires:	python-pykka
-Requires:	python-requests
-Requires:	python-tornado
 Provides:	group(mopidy)
 Provides:	user(mopidy)
 Requires(postun):	/usr/sbin/groupdel
